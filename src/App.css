@@ -30,3 +30,17 @@
     transform: rotate(360deg);
   }
 }
+
+.search_bar {
+  /* position: center; */
+  width: 200px;
+  height: 250px;
+  /* margin: 0 auto; */
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* width: 50%; */
+
+}
