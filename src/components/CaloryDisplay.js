@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import Display from './Display'
+import { connect } from 'react-redux'
 
 class CaloryDisplay extends Component {
 
@@ -11,20 +12,29 @@ class CaloryDisplay extends Component {
   // }
 
   render() {
-    // console.log(this.props.searchSelect);
+    // console.log(this.props);
     let display
     if (this.props.searchSelect.foods) {
 
       display = this.props.searchSelect.foods.map(food => {
         // debugger
-        return <Display food={this.props.searchSelect.foods} key={food.tags.tag_id} />
+        return <Display food={this.props.searchSelect.foods} key={food.tags.tag_id} clickAdder={this.props.clickAdder} changeType={this.props.changeType}/>
       })
     }
-    return ( <div className="search_bar">
-        Display
+
+    return ( <div className="calorieCard">
+
         {display}
+
       </div>)
   }
 }
 
-export default CaloryDisplay;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    search: state.searchValue
+  }
+}
+
+export default connect(mapStateToProps)(CaloryDisplay);

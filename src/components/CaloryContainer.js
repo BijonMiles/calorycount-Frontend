@@ -1,13 +1,19 @@
 import React, {Component} from 'react'
 import SearchForm from './SearchForm'
+import CaloryList from './CaloryList'
 import CaloryDisplay from './CaloryDisplay'
+
 
 
 class CaloryContainer extends Component {
 
   state = {
     searchValue: "",
-    searchSelect: []
+    searchSelect: [],
+    breakfast: [],
+    lunch: [],
+    dinner: [],
+    type: []
   }
 
   searchHandler = (e) => {
@@ -40,7 +46,7 @@ class CaloryContainer extends Component {
   }
 
   moreFetch = (info) => {
-  console.log(info.common[0].food_name);
+  // console.log(info.common[0].food_name);
   // debugger
     fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
 
@@ -59,24 +65,56 @@ class CaloryContainer extends Component {
     .then( r => r.json())
     .then( json => {
       console.log(json);
-      this.setState({ searchSelect: json })
+      this.setState({ searchSelect: json, type: "breakfast" })
+
+    })
+  }
+
+  clickAdder = (event, food) => {
+    event.preventDefault()
+    console.log(this.state.type);
+    // debugger
+    if (this.state.type === "breakfast") {
+      this.setState({ breakfast: [...this.state.breakfast, food]})
+    } else if (this.state.type === "lunch") {
+      this.setState({ lunch: [...this.state.lunch, food]})
+    } else {
+      this.setState({ dinner: [...this.state.dinner, food]})
+    }
+
+  }
+
+  changeType = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      type: event.target.value
     })
   }
 
 
 
+
   render () {
-    // console.log(this.state);
+    // console.log(this.state.user);
     return (
-      <div>
-        CaloryContainer
+      <div >
+        <div className="calorieList split2" >
+          <CaloryList breakfast={this.state.breakfast}
+          lunch={this.state.lunch}
+          dinner={this.state.dinner}/>
+        </div>
+        <div className="caloriedisplay split" >
+          <SearchForm
+          searchHandler={this.searchHandler}
+          searchSubmit={this.searchSubmit} />
 
-        Search: <SearchForm
-        searchHandler={this.searchHandler}
-        searchSubmit={this.searchSubmit} />
-        <br/>
+          <CaloryDisplay
+          changeType={this.changeType}
+          searchSelect={this.state.searchSelect}
+          clickAdder={this.clickAdder}/>
+        </div>
 
-        <CaloryDisplay searchSelect={this.state.searchSelect}/>
 
       </div>
     )

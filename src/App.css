@@ -31,16 +31,113 @@
   }
 }
 
-.search_bar {
-  /* position: center; */
-  width: 200px;
-  height: 250px;
-  /* margin: 0 auto; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-size: 16px;
+}
+
+.view {
+  background-image: url("image4.jpg");
+  background-size: cover;
+  height: 100vh;
+
+}
+
+.displaycard {
+  background-color: white;
+  border: 2px solid;
+  display: inline-block;
+  border-radius: 15px;
+  height: auto;
+  width: auto;
+}
+
+.navbar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  background-color: brown;
+  /* opacity: 0.7; */
+
+}
+
+.navhome {
+  padding: 5px;
+  color: white;
+  float: left;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  height: auto;
+  width: 6vw;
+  text-align: center;
+  height: 4vh;
+}
 
-  /* width: 50%; */
+.navitem {
 
+  padding: 5px;
+  color: white;
+  float: right;
+  display: block;
+  height: auto;
+  width: 6vw;
+  text-align: center;
+  height: 4vh;
+}
+
+.calorieList {
+  border: 2px solid;
+  left: 0;
+  float: left;
+  width: 30%;
+  height: 96vh;
+
+  /* background-color: black; */
+}
+
+.caloriedisplay {
+  /* float: right; */
+  margin-left: 30%;
+  border: 2px solid;
+  width: 70%;
+  height: 96vh;
+  /* justify-content: center; */
+  text-align: center;
+  /* margin: 0 auto; */
+  /* background-color: white; */
+
+}
+
+.search {
+  border-radius: 5px;
+  height: 3.5vh;
+  margin-top: 10vh;
+  /* display: block; */
+  width: 20vw;
+  text-align: center;
+}
+
+.calorieCard {
+  margin-top: 18vh;
+}
+
+.button {
+  margin-top: 10vh;
+  background-color: brown; /* Green */
+  border: none;
+  color: white;
+  padding: 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
 }

@@ -14,18 +14,18 @@ code {
     monospace;
 }
 
-.bg, body {
+/* .bg, body { */
   /* The image used */
-  background-image: url("image3.jpg");
+  /* background-image: url("image3.jpg"); */
 
   /* Full height */
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
 
   /* Center and scale the image nicely */
-  background-position: top;
+  /* background-position: top;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 
 
-}
+/* } */
