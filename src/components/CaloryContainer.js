@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import SearchForm from './SearchForm'
 import CaloryList from './CaloryList'
 import CaloryDisplay from './CaloryDisplay'
+import Profile from './Profile'
 
 
 
@@ -13,7 +14,7 @@ class CaloryContainer extends Component {
     breakfast: [],
     lunch: [],
     dinner: [],
-    type: []
+    type: "breakfast"
   }
 
   searchHandler = (e) => {
@@ -22,6 +23,10 @@ class CaloryContainer extends Component {
       [e.target.name]:  e.target.value
     })
 
+  }
+
+  componentDidMount(){
+    console.log(this.props.meals);
   }
 
   searchSubmit = (e) => {
@@ -39,8 +44,8 @@ class CaloryContainer extends Component {
     })
     .then( r => r.json())
     .then( json => {
-      console.log(json);
-      console.log(json.common[0].food_name);
+      // console.log(json);
+      // console.log("Search: ", json.common);
       this.moreFetch(json)
     })
   }
@@ -65,7 +70,7 @@ class CaloryContainer extends Component {
     .then( r => r.json())
     .then( json => {
       console.log(json);
-      this.setState({ searchSelect: json, type: "breakfast" })
+      this.setState({ searchSelect: json })
 
     })
   }
@@ -92,17 +97,64 @@ class CaloryContainer extends Component {
     })
   }
 
+  saveHandler = (event, day) => {
+    event.preventDefault()
+    // console.log("User: ", this.props.user);
+    // debugger
+    let date = "Wednesday"
+
+    fetch("http://localhost:3000/days", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts":  "application/json"
+      },
+      body: JSON.stringify({
+        total_calory: 0,
+        breakfast: day.breakfast,
+        lunch:  day.lunch,
+        dinner: day.dinner,
+        date: date,
+      })
+    })
+    .then( res => res.json() )
+    .then( json => {
+      // debugger
+      this.postSchedule(json)
+    })
+  }
+
+  postSchedule = (day) => {
+    fetch("http://localhost:3000/schedules", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts":  "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.props.user.user_id,
+        day_id: day.id
+      })
+    })
+    .then( res => res.json() )
+    .then(console.log)
+  }
+
 
 
 
   render () {
-    // console.log(this.state.user);
+    // console.log("Here ", this.state.searchSelect);
     return (
       <div >
         <div className="calorieList split2" >
           <CaloryList breakfast={this.state.breakfast}
           lunch={this.state.lunch}
-          dinner={this.state.dinner}/>
+          dinner={this.state.dinner}
+          saveHandler={this.saveHandler}/>
+
         </div>
         <div className="caloriedisplay split" >
           <SearchForm
@@ -110,11 +162,11 @@ class CaloryContainer extends Component {
           searchSubmit={this.searchSubmit} />
 
           <CaloryDisplay
+          type={this.state.type}
           changeType={this.changeType}
           searchSelect={this.state.searchSelect}
           clickAdder={this.clickAdder}/>
         </div>
-
 
       </div>
     )

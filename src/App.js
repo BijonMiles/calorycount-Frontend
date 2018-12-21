@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import CaloryContainer from './components/CaloryContainer'
+import Profile from './components/Profile'
 import NavBar from './components/NavBar'
 import SignUp from './components/SignUp'
 import LoginForm from './components/LoginForm'
@@ -9,7 +10,8 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 class App extends Component {
 
   state = {
-    user: {}
+    user: {},
+    meals: []
   }
 
   componentDidMount() {
@@ -30,11 +32,49 @@ class App extends Component {
         this.setState({
           user: json
         })
+        this.preMountFetch(json)
       })
       this.props.history.push('/')
     } else {
       this.props.history.push('/')
     }
+  }
+
+  preMountFetch = (user) => {
+    fetch("http://localhost:3000/schedules")
+    .then(res => res.json() )
+    .then(schedules => {
+      console.log(schedules);
+      let find = schedules.filter(id => {
+        // debugger
+        let fetId = parseInt(id.user_id)
+        // debugger
+        return user.user_id === fetId
+      })
+
+      if (find.length > 0) {
+        // debugger
+        this.preMountFood(user, find)
+      }
+    })
+  }
+
+  preMountFood = (user, schedules) => {
+    fetch("http://localhost:3000/foods")
+    .then(res => res.json() )
+    .then( json => {
+
+      let finder = json.filter( food => {
+        // debugger
+        return food.day_id === schedules[schedules.length- 1].day_id
+      })
+
+      this.setState({
+        meals: [finder]
+      })
+      console.log(finder);
+    })
+
   }
 
   createSubmit = (event, userObj) => {
@@ -100,9 +140,10 @@ class App extends Component {
     return (<div className="view" >
         <NavBar />
         <Switch>
-        <Route exact path="/" render={(props) =>  (<CaloryContainer user={this.state.user} createSubmit={this.state.user}/>)} />
+        <Route exact path="/" render={(props) =>  (<CaloryContainer user={this.state.user} createSubmit={this.state.user} meals={this.state.meals}/>)} />
           <Route exact path="/signup" render={(props) =>  (<SignUp createSubmit={this.createSubmit}/>)} />
           <Route exact path="/login" render={(props) =>  (<LoginForm loginSubmit={this.loginSubmit}/>)} />
+          <Route exact path="/profile" render={(props) =>  (<Profile realSubmit={""}/>)} />
         </ Switch>
       </ div>
     )

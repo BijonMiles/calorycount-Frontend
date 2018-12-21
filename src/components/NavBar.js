@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 class NavBar extends Component {
 
 
-  handleLogClick = (e) => {
-    e.preventDefault()
-
-    if (localStorage.token) {
-      localStorage.removeItem('token')
-
-      e.target.innerText = "Login"
-    }
-  }
+  // handleLogClick = (e) => {
+  //   e.preventDefault()
+  //
+  //   if (localStorage.token) {
+  //     localStorage.removeItem('token')
+  //
+  //     e.target.innerText = "Login"
+  //   }
+  // }
   render() {
 
     return (
@@ -29,6 +29,10 @@ class NavBar extends Component {
 
       <Link to="/signup">
       <li className="navitem">Sign Up</li>
+      </Link>
+
+      <Link to="/profile">
+      <li className="navitem">Profile</li>
       </Link>
       </ul>
     );

@@ -12,13 +12,16 @@ class CaloryDisplay extends Component {
   // }
 
   render() {
-    // console.log(this.props);
+    console.log("Before map: ", this.props.searchSelect);
     let display
     if (this.props.searchSelect.foods) {
 
-      display = this.props.searchSelect.foods.map(food => {
+      display = this.props.searchSelect.foods.map( (food, idx) => {
         // debugger
-        return <Display food={this.props.searchSelect.foods} key={food.tags.tag_id} clickAdder={this.props.clickAdder} changeType={this.props.changeType}/>
+        return (<Display food={this.props.searchSelect.foods} key={food.tags.tag_id} idx={idx}
+        clickAdder={this.props.clickAdder}
+        type={this.props.type}
+        changeType={this.props.changeType}/>)
       })
     }
 
@@ -31,7 +34,7 @@ class CaloryDisplay extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     search: state.searchValue
   }

@@ -23,6 +23,7 @@ class CaloryList extends Component {
     return (
       <div>
         Breakfast:
+        <button className="button" onClick={(e) => this.props.saveHandler(e, this.props)} > Save </button>
         {foodArr}
         <br />
         Lunch:
