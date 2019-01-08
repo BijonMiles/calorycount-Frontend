@@ -35,17 +35,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 body {
   font-size: 16px;
+
+  background-image: url("image6.jpg");
+  background-size: cover;
+  height: 100vh;
+  /* overflow: scroll; */
 }
 
 .view {
-  background-image: url("image4.jpg");
+  /* background-image: url("image6.jpg");
   background-size: cover;
-  height: 100vh;
+  height: 100vh; */
+  /* background-origin: inherit; */
+  /* background-position: center; */
 
+  overflow: scroll;
 }
 
 .displaycard {
@@ -55,16 +64,22 @@ body {
   border-radius: 15px;
   height: auto;
   width: auto;
+  padding: 15px;
 }
 
 .navbar {
+  /* position:  */
   list-style: none;
-  margin: 0;
+  margin: 0, auto;
   padding: 0;
   overflow: hidden;
   width: 100vw;
   background-color: brown;
   /* opacity: 0.7; */
+
+  position: fixed;
+  top:0;
+  z-index: 1;
 
 }
 
@@ -81,7 +96,7 @@ body {
 
 .navitem {
 
-  padding: 5px;
+  padding: 4px 8px;
   color: white;
   float: right;
   display: block;
@@ -95,7 +110,7 @@ body {
   border: 2px solid;
   left: 0;
   float: left;
-  width: 30%;
+  width: 25%;
   height: 96vh;
 
   /* background-color: black; */
@@ -104,7 +119,7 @@ body {
 .caloriedisplay {
   /* float: right; */
   margin-left: 30%;
-  border: 2px solid;
+  /* border: 2px solid; */
   width: 70%;
   height: 96vh;
   /* justify-content: center; */
@@ -124,7 +139,9 @@ body {
 }
 
 .calorieCard {
-  margin-top: 18vh;
+  margin-top: 10vh;
+  overflow: scroll;
+  height: 60vh;
 }
 
 .button {
@@ -140,4 +157,173 @@ body {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 12px;
+}
+
+.top, .bottom {
+    padding: 30px;
+
+  }
+
+  .bottom {
+
+    background-color: rgba(white, 0.3);
+    text-align: left;
+  }
+
+  #user-profile {
+    /* height: center; */
+    margin-top: 20vh;
+    width: 100%;
+    max-width: 450px;
+    margin: 20vh auto;
+    border-radius: 15px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 2px 2px 5px #000;
+    border: 1px solid #000;
+    @include dotBg(darken($green, 5%), $green, 30px);
+  }
+
+  .profile-color {
+    /* background-color: white; */
+    background-image: url("image3.jpg")
+
+    /* color: brown; */
+  }
+
+.area {
+  border: 1px solid #000;
+  opacity: 0.9;
+  background-color: black;
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  color: white;
+  margin-top: 2vh;
+}
+
+.breakfast-area {
+  border: 1px solid #000;
+  opacity: 0.9;
+  height: inherit;
+  width: 25%;
+  position: fixed;
+  margin-top: 2vh;
+}
+
+.lunch-area {
+  border: 1px solid #000;
+  height: inherit;
+  margin-top: 20vh;
+  position: fixed;
+  width: 25%;
+  /* text-align: center; */
+}
+
+.dinner-area {
+  width: 25%;
+  height: inherit;
+  border: 1px solid #000;
+  margin-top: 45vh;
+  position: fixed;
+}
+
+.form {
+  border: 3px solid #f1f1f1;
+  margin-top: 15vh;
+  max-width: 50%;
+  margin-left: 25vw;
+  background-color: lightgrey;
+  /* background-color: lightblue; */
+  /* opacity: 0.9; */
+  border-radius: 15px;
+}
+
+input[type=text], input[type=password], input[name=first_name], input[name=last_name] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.buttonlogin {
+  justify-content: center;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.buttonlogin:hover {
+  opacity: 0.8;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container1 {
+  padding: 16px;
+}
+
+.land {
+  text-align: right;
+}
+
+.together {
+  margin-top: 8vh;
+  display: inline-block;
+  flex-wrap: nowrap;
+  float: right;
+  /* border: 2px solid; */
+  width: 30vw;
+  /* background-color: brown; */
+}
+
+.about {
+  display: flex;
+  background-color: brown;
+  opacity: 0.8;
+  color: white;
+  border-radius: 15px;
+  margin-top: 6vh;
+  /* right: 0px; */
+  /* float: right; */
+
+  /* width: 33%; */
+  /* margin: ; */
+  text-align: center;
+}
+
+.more {
+  margin: 0 5px;
+}
+
+.miss {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: brown;
+  opacity: 0.8;
+  color: white;
+  border-radius: 15px;
+  /* margin-top: 28vh; */
+
+  /* right: 0px; */
+  float: right;
+  position:  relative;
+
+  width: 33%;
+  /* margin: ; */
+  text-align: center;
 }

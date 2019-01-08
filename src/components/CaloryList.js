@@ -9,7 +9,10 @@ class CaloryList extends Component {
   render() {
     console.log(this.props.breakfast);
 
+    // debugger
+
     let foodArr = this.props.breakfast.map( food => {
+      // debugger
       return <List food={food} key={food.food_name} />
     })
 
@@ -21,16 +24,26 @@ class CaloryList extends Component {
       return <Dinnerlist food={food} key={food.food_name} />
     })
     return (
-      <div>
+      <div className="area" >
+
+
+        <div className="breakfast-area">
+        <strong > Total Cal: {this.props.totalCal} </strong> <br />
         Breakfast:
-        <button className="button" onClick={(e) => this.props.saveHandler(e, this.props)} > Save </button>
-        {foodArr}
+          <button className="button" onClick={(e) => this.props.saveHandler(e, this.props)} > Save </button>
+
+          {foodArr}
+        </div>
         <br />
-        Lunch:
-        {foodArr1}
+        <div className="lunch-area">
+          Lunch:
+          {foodArr1}
+        </div>
         <br />
-        Dinner:
-        {foodArr2}
+        <div className="dinner-area">
+          Dinner:
+          {foodArr2}
+        </div>
       </div>
     )
   }

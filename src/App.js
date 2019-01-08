@@ -6,6 +6,7 @@ import NavBar from './components/NavBar'
 import SignUp from './components/SignUp'
 import LoginForm from './components/LoginForm'
 import {Route, Switch, withRouter} from 'react-router-dom'
+import LandingPage from './components/LandingPage'
 
 class App extends Component {
 
@@ -29,14 +30,15 @@ class App extends Component {
       .then(res => res.json() )
       .then( json => {
         console.log("Current User: ", json);
+        debugger
         this.setState({
           user: json
         })
         this.preMountFetch(json)
       })
-      this.props.history.push('/')
+      this.props.history.push('/profile')
     } else {
-      this.props.history.push('/')
+      this.props.history.push('/welcome')
     }
   }
 
@@ -70,7 +72,7 @@ class App extends Component {
       })
 
       this.setState({
-        meals: [finder]
+        meals: finder
       })
       console.log(finder);
     })
@@ -128,22 +130,117 @@ class App extends Component {
     .then(resp => {
       localStorage.setItem('token', resp.jwt)
       // console.log(resp);
-      this.setState({
-        user: resp.user
+      // this.setState({
+      //   user: resp.user
+      // })
+      let token = localStorage.getItem('token')
+      // debugger
+
+      fetch("http://localhost:3000/current_user", {
+        headers: {
+          "Content-Type": "application/json",
+          "Accepts":  "application/json",
+          Authorization: token
+        }
+      })
+      .then(res => res.json() )
+      .then( json => {
+        console.log("Current User: ", json);
+        this.setState({
+          user: json
+        })
+        this.preMountFetch(json)
       })
     })
     this.props.history.push('/')
+  }
 
+  saveHandler = (event, day) => {
+    event.preventDefault()
+    // console.log("User: ", this.props.user);
+    // debugger
+    let date = "Wednesday"
+
+
+    fetch("http://localhost:3000/days", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts":  "application/json"
+      },
+      body: JSON.stringify({
+        total_calory: day.totalCal,
+        breakfast: day.breakfast,
+        lunch:  day.lunch,
+        dinner: day.dinner,
+        date: date,
+      })
+    })
+    .then( res => res.json() )
+    .then( json => {
+      // debugger
+      this.postSchedule(json)
+    })
+  }
+
+  postSchedule = (day) => {
+    fetch("http://localhost:3000/schedules", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts":  "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.user_id,
+        day_id: day.id
+      })
+    })
+    .then( res => res.json() )
+    .then(resp => {
+
+      document.location.reload()
+
+      // let breakfast = day.breakfast[0].map( food => {
+      //   return ({ meal: "breakfast", food_name: food.food_name, calory: food.nf_calories})
+      // })
+      //
+      // let lunch = day.lunch[0].map( food => {
+      //   return ({ meal: "lunch", food_name: food.food_name, calory: food.nf_calories})
+      // })
+      // let dinner = day.dinner[0].map( food => {
+      //   return ({ meal: "dinner", food_name: food.food_name, calory: food.nf_calories})
+      // })
+      // this.setState({ meals: [breakfast, lunch, dinner]})
+    })
+  }
+
+  handleLogClick = (e) => {
+    e.preventDefault()
+
+    // debugger
+
+    if (localStorage.token) {
+      localStorage.removeItem('token')
+
+      // e.target.innerText = "Login"
+      this.props.history.push('/welcome')
+    }
   }
 
   render() {
+    // console.log(this.state.user);
+
+
     return (<div className="view" >
-        <NavBar />
+        <NavBar handleLogClick={this.handleLogClick}/>
         <Switch>
-        <Route exact path="/" render={(props) =>  (<CaloryContainer user={this.state.user} createSubmit={this.state.user} meals={this.state.meals}/>)} />
+          <Route exact path="/welcome" render={(props) =>  (<LandingPage />)} />
           <Route exact path="/signup" render={(props) =>  (<SignUp createSubmit={this.createSubmit}/>)} />
           <Route exact path="/login" render={(props) =>  (<LoginForm loginSubmit={this.loginSubmit}/>)} />
-          <Route exact path="/profile" render={(props) =>  (<Profile realSubmit={""}/>)} />
+          <Route exact path="/profile" render={(props) =>  (<Profile user={this.state}/>)} />
+          <Route exact path="/" render={(props) =>  (<CaloryContainer user={this.state.user} createSubmit={this.state.user} meals={this.state.meals} saveHandler={this.saveHandler}/>)} />
         </ Switch>
       </ div>
     )

@@ -14,7 +14,9 @@ class CaloryContainer extends Component {
     breakfast: [],
     lunch: [],
     dinner: [],
-    type: "breakfast"
+    searchResults: [],
+    type: "breakfast",
+    totalCal: 0,
   }
 
   searchHandler = (e) => {
@@ -25,9 +27,9 @@ class CaloryContainer extends Component {
 
   }
 
-  componentDidMount(){
-    console.log(this.props.meals);
-  }
+  // componentDidMount(){
+  //   console.log("works");
+  // }
 
   searchSubmit = (e) => {
     e.preventDefault()
@@ -45,7 +47,11 @@ class CaloryContainer extends Component {
     .then( r => r.json())
     .then( json => {
       // console.log(json);
-      // console.log("Search: ", json.common);
+      console.log("Search: ", json.common);
+      // debugger
+      this.setState({
+        searchResults: json.common
+      })
       this.moreFetch(json)
     })
   }
@@ -77,8 +83,12 @@ class CaloryContainer extends Component {
 
   clickAdder = (event, food) => {
     event.preventDefault()
-    console.log(this.state.type);
-    // debugger
+    // console.log(this.state.type);
+
+    let count = this.state.totalCal + food.nf_calories
+
+
+
     if (this.state.type === "breakfast") {
       this.setState({ breakfast: [...this.state.breakfast, food]})
     } else if (this.state.type === "lunch") {
@@ -86,6 +96,7 @@ class CaloryContainer extends Component {
     } else {
       this.setState({ dinner: [...this.state.dinner, food]})
     }
+    this.setState({ totalCal: count })
 
   }
 
@@ -97,50 +108,50 @@ class CaloryContainer extends Component {
     })
   }
 
-  saveHandler = (event, day) => {
-    event.preventDefault()
-    // console.log("User: ", this.props.user);
-    // debugger
-    let date = "Wednesday"
-
-    fetch("http://localhost:3000/days", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-        "Accepts":  "application/json"
-      },
-      body: JSON.stringify({
-        total_calory: 0,
-        breakfast: day.breakfast,
-        lunch:  day.lunch,
-        dinner: day.dinner,
-        date: date,
-      })
-    })
-    .then( res => res.json() )
-    .then( json => {
-      // debugger
-      this.postSchedule(json)
-    })
-  }
-
-  postSchedule = (day) => {
-    fetch("http://localhost:3000/schedules", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-        "Accepts":  "application/json"
-      },
-      body: JSON.stringify({
-        user_id: this.props.user.user_id,
-        day_id: day.id
-      })
-    })
-    .then( res => res.json() )
-    .then(console.log)
-  }
+  // saveHandler = (event, day) => {
+  //   event.preventDefault()
+  //   // console.log("User: ", this.props.user);
+  //   // debugger
+  //   let date = "Wednesday"
+  //
+  //   fetch("http://localhost:3000/days", {
+  //     method: "POST",
+  //
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accepts":  "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       total_calory: 0,
+  //       breakfast: day.breakfast,
+  //       lunch:  day.lunch,
+  //       dinner: day.dinner,
+  //       date: date,
+  //     })
+  //   })
+  //   .then( res => res.json() )
+  //   .then( json => {
+  //     // debugger
+  //     this.postSchedule(json)
+  //   })
+  // }
+  //
+  // postSchedule = (day) => {
+  //   fetch("http://localhost:3000/schedules", {
+  //     method: "POST",
+  //
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accepts":  "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       user_id: this.props.user.user_id,
+  //       day_id: day.id
+  //     })
+  //   })
+  //   .then( res => res.json() )
+  //   .then(console.log)
+  // }
 
 
 
@@ -153,7 +164,8 @@ class CaloryContainer extends Component {
           <CaloryList breakfast={this.state.breakfast}
           lunch={this.state.lunch}
           dinner={this.state.dinner}
-          saveHandler={this.saveHandler}/>
+          totalCal={this.state.totalCal}
+          saveHandler={this.props.saveHandler}/>
 
         </div>
         <div className="caloriedisplay split" >
@@ -165,6 +177,7 @@ class CaloryContainer extends Component {
           type={this.state.type}
           changeType={this.changeType}
           searchSelect={this.state.searchSelect}
+          searchResults={this.state.searchResults}
           clickAdder={this.clickAdder}/>
         </div>
 

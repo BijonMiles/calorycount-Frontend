@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
 
 
 // const NavBar = props => {
@@ -9,35 +10,58 @@ class NavBar extends Component {
   // handleLogClick = (e) => {
   //   e.preventDefault()
   //
+  //   debugger
+  //
   //   if (localStorage.token) {
   //     localStorage.removeItem('token')
   //
-  //     e.target.innerText = "Login"
+  //     // e.target.innerText = "Login"
+  //     this.props.history.push('/')
   //   }
   // }
   render() {
 
     return (
       <ul className="navbar">
+        <Link to="/welcome">
+        <li className="navhome">Welcome</li>
+        </Link>
+
+      { localStorage.token ?
+        (<span>
+          <li className="navitem" onClick={this.props.handleLogClick} >{localStorage.token ? "Logout" : "Login"}</li>
+        </span>
+        )
+        :
+        (<Link to="/login" >
+          <li className="navitem"  >{localStorage.token ? "Logout" : "Login"}</li>
+        </Link>)
+      }
+
+
+      {localStorage.token ?
+        (<Link to="/profile">
+        <li className="navitem">Profile</li>
+        </Link>)
+        :
+        (<Link to="/signup">
+          <li className="navitem" >SignUp</li>
+        </Link>)
+      }
+
       <Link to="/">
-      <li className="navhome">Home</li>
+      <li className="navitem">Home</li>
       </Link>
 
-      <Link to="/login" >
-      <li className="navitem" > {localStorage.token ? "Logout" : "Login"} </li>
-      </Link>
 
-      <Link to="/signup">
-      <li className="navitem">Sign Up</li>
-      </Link>
-
-      <Link to="/profile">
-      <li className="navitem">Profile</li>
-      </Link>
       </ul>
     );
   }
 }
+
+// <Link to="/profile">
+// <li className="navitem">Profile</li>
+// </Link>
 // };
 
-export default NavBar;
+export default withRouter(NavBar);
