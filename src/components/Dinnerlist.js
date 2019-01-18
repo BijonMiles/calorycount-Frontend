@@ -5,7 +5,7 @@ const Dinner = (props) => {
   // console.log(props);
 
   return ( <div>
-      <li> {props.food.food_name}, Calories: {props.food.nf_calories}</li>
+      <ul> {props.food.food_name ? props.food.food_name : null }, Calories: {props.food.nf_calories ? props.food.nf_calories : null} |<span className="x-button" onClick={(e) => props.handleListDel(e, props.food, "dinner")}>x</span>| </ul>
     </div>
   )
 }

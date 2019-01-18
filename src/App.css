@@ -205,27 +205,33 @@ body {
 .breakfast-area {
   border: 1px solid #000;
   opacity: 0.9;
-  height: inherit;
+  height: 20%;
   width: 25%;
   position: fixed;
   margin-top: 2vh;
+  overflow: scroll;
+
 }
 
 .lunch-area {
   border: 1px solid #000;
-  height: inherit;
+  height: 26%;
   margin-top: 20vh;
   position: fixed;
   width: 25%;
+
+  overflow: scroll;
   /* text-align: center; */
 }
 
 .dinner-area {
   width: 25%;
-  height: inherit;
+  height: 26%;
   border: 1px solid #000;
   margin-top: 45vh;
   position: fixed;
+
+  overflow: scroll;
 }
 
 .form {
@@ -326,4 +332,10 @@ img.avatar {
   width: 33%;
   /* margin: ; */
   text-align: center;
+}
+
+.x-button {
+  /* float: right; */
+  margin: auto;
+  color: brown;
 }

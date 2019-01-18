@@ -86,6 +86,7 @@ class CaloryContainer extends Component {
     // console.log(this.state.type);
 
     let count = this.state.totalCal + food.nf_calories
+    count.toFixed(1)
 
 
 
@@ -106,6 +107,80 @@ class CaloryContainer extends Component {
     this.setState({
       type: event.target.value
     })
+  }
+
+
+  handleListDel = (event, food, type) => {
+    event.preventDefault()
+    console.log("breakfast : ", this.state.breakfast);
+    console.log("food: ", food);
+    let count = 0
+    let item
+
+    if (type === "breakfast") {
+
+      let newBreakfast = this.state.breakfast.filter( name => {
+        // debugger
+
+        if ((name.food_name === food.food_name) && (count < 1)) {
+          console.log(count);
+          item = food.food_name
+
+        }else {
+          item = "N/A"
+        }
+        if (name.food_name === food.food_name) {
+          count = count + 1
+        }
+        // debugger
+        return (name.food_name !== item)
+      })
+
+      this.setState({ breakfast: newBreakfast})
+
+    } else if (type === "lunch") {
+      let newLunch = this.state.lunch.filter( name => {
+        // debugger
+        if ((name.food_name === food.food_name) && (count < 1)) {
+          console.log(count);
+          item = food.food_name
+
+        }else {
+          item = "N/A"
+        }
+        if (name.food_name === food.food_name) {
+          count = count + 1
+        }
+        return (name.food_name !== item)
+      })
+      this.setState({ lunch: newLunch })
+
+    } else if (type === "dinner") {
+      let newDinner = this.state.dinner.filter( name => {
+        if ((name.food_name === food.food_name) && (count < 1)) {
+          console.log(count);
+          item = food.food_name
+
+        }else {
+          item = "N/A"
+        }
+        if (name.food_name === food.food_name) {
+          count = count + 1
+        }
+        return (name.food_name !== item)
+      })
+      this.setState({ dinner: newDinner })
+    }
+    let cal = this.state.totalCal
+
+    cal = cal - food.nf_calories
+    cal.toFixed(1)
+
+    if (cal < 0.5) {
+      cal = 0
+    }
+    this.setState({ totalCal: cal})
+
   }
 
   // saveHandler = (event, day) => {
@@ -165,7 +240,8 @@ class CaloryContainer extends Component {
           lunch={this.state.lunch}
           dinner={this.state.dinner}
           totalCal={this.state.totalCal}
-          saveHandler={this.props.saveHandler}/>
+          saveHandler={this.props.saveHandler}
+          handleListDel={this.handleListDel}/>
 
         </div>
         <div className="caloriedisplay split" >

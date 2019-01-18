@@ -12,7 +12,8 @@ class App extends Component {
 
   state = {
     user: {},
-    meals: []
+    meals: [],
+    totalCal: []
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class App extends Component {
       .then(res => res.json() )
       .then( json => {
         console.log("Current User: ", json);
-        debugger
+
         this.setState({
           user: json
         })
@@ -65,7 +66,7 @@ class App extends Component {
     fetch("http://localhost:3000/foods")
     .then(res => res.json() )
     .then( json => {
-
+      console.log("json ", schedules);
       let finder = json.filter( food => {
         // debugger
         return food.day_id === schedules[schedules.length- 1].day_id
@@ -74,9 +75,19 @@ class App extends Component {
       this.setState({
         meals: finder
       })
-      console.log(finder);
+      this.preMountTotalCal(schedules)
     })
 
+  }
+
+  preMountTotalCal = (schedules) => {
+
+    fetch(`http://localhost:3000/days/${schedules[schedules.length- 1].day_id}`)
+    .then(res => res.json() )
+    .then( day => {
+      // debugger
+      this.setState({ totalCal: day.total_calory})
+    })
   }
 
   createSubmit = (event, userObj) => {
@@ -135,24 +146,30 @@ class App extends Component {
       // })
       let token = localStorage.getItem('token')
       // debugger
-
-      fetch("http://localhost:3000/current_user", {
-        headers: {
-          "Content-Type": "application/json",
-          "Accepts":  "application/json",
-          Authorization: token
-        }
-      })
-      .then(res => res.json() )
-      .then( json => {
-        console.log("Current User: ", json);
-        this.setState({
-          user: json
+      if (localStorage.token !== "undefined") {
+        fetch("http://localhost:3000/current_user", {
+          headers: {
+            "Content-Type": "application/json",
+            "Accepts":  "application/json",
+            Authorization: token
+          }
         })
-        this.preMountFetch(json)
-      })
+        .then(res => res.json() )
+        .then( json => {
+          console.log("Current User: ", json);
+          this.setState({
+            user: json
+          })
+          this.preMountFetch(json)
+        })
+        this.props.history.push('/')
+      } else {
+        localStorage.clear()
+        alert("User Not Found")
+        this.props.history.push('/login')
+      }
     })
-    this.props.history.push('/')
+
   }
 
   saveHandler = (event, day) => {
@@ -180,6 +197,8 @@ class App extends Component {
     .then( res => res.json() )
     .then( json => {
       // debugger
+      console.log("dayfetch: ", json);
+      this.setState({ totalCal: json.total_calory})
       this.postSchedule(json)
     })
   }
@@ -199,7 +218,8 @@ class App extends Component {
     })
     .then( res => res.json() )
     .then(resp => {
-
+      console.log("schedule ", resp);
+      // debugger
       document.location.reload()
 
       // let breakfast = day.breakfast[0].map( food => {

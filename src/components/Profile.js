@@ -23,7 +23,7 @@ class Profile extends Component {
     })
     // debugger
 
-    console.log(this.props.user.user.first_name);
+    console.log(" totalCal: ", this.props.user.totalCal);
     return (
       <div className="profile-color" id="user-profile">
         <div className="top">
@@ -31,7 +31,7 @@ class Profile extends Component {
 
             <h2> Welcome back, {this.props.user.user.first_name}</h2>
             <h3>Username: {this.props.user.user.username}</h3>
-            <h4> Cal: {this.props.user.user.totalCal ? this.props.user.user.totalCal : "N/A"} </h4>
+            <h4> Cal: {this.props.user.totalCal ? this.props.user.totalCal : "N/A"} </h4>
 
           <hr />
 
