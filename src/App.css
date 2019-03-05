@@ -104,6 +104,7 @@ body {
   width: 6vw;
   text-align: center;
   height: 4vh;
+  cursor: pointer;
 }
 
 .calorieList {
@@ -210,6 +211,7 @@ body {
   position: fixed;
   margin-top: 2vh;
   overflow: scroll;
+  /* text-align: center; */
 
 }
 
@@ -219,7 +221,7 @@ body {
   margin-top: 20vh;
   position: fixed;
   width: 25%;
-
+  /* text-align: center; */
   overflow: scroll;
   /* text-align: center; */
 }
