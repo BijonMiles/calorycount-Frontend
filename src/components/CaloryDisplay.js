@@ -4,12 +4,6 @@ import { connect } from 'react-redux'
 
 class CaloryDisplay extends Component {
 
-  // imageRender = () => {
-  //   if (this.props.searchSelect) {
-  //     console.log(this.props.searchSelect.foods[0].photo.highres);
-  //     return this.props.searchSelect.foods[0].photo.highres
-  //   }
-  // }
 
   state = {
     eachFood: [],

@@ -140,10 +140,7 @@ class App extends Component {
     .then(res => res.json())
     .then(resp => {
       localStorage.setItem('token', resp.jwt)
-      // console.log(resp);
-      // this.setState({
-      //   user: resp.user
-      // })
+
       let token = localStorage.getItem('token')
       // debugger
       if (localStorage.token !== "undefined") {
@@ -222,17 +219,6 @@ class App extends Component {
       // debugger
       document.location.reload()
 
-      // let breakfast = day.breakfast[0].map( food => {
-      //   return ({ meal: "breakfast", food_name: food.food_name, calory: food.nf_calories})
-      // })
-      //
-      // let lunch = day.lunch[0].map( food => {
-      //   return ({ meal: "lunch", food_name: food.food_name, calory: food.nf_calories})
-      // })
-      // let dinner = day.dinner[0].map( food => {
-      //   return ({ meal: "dinner", food_name: food.food_name, calory: food.nf_calories})
-      // })
-      // this.setState({ meals: [breakfast, lunch, dinner]})
     })
   }
 
