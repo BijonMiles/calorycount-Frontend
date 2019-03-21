@@ -193,7 +193,7 @@ class App extends Component {
     })
     .then( res => res.json() )
     .then( json => {
-      // debugger
+  
       console.log("dayfetch: ", json);
       this.setState({ totalCal: json.total_calory})
       this.postSchedule(json)
@@ -229,7 +229,7 @@ class App extends Component {
 
     if (localStorage.token) {
       localStorage.removeItem('token')
-
+      // debugger
       // e.target.innerText = "Login"
       this.props.history.push('/welcome')
     }
@@ -237,6 +237,7 @@ class App extends Component {
 
   render() {
     // console.log(this.state.user);
+    //debugger
 
 
     return (<div className="view" >
